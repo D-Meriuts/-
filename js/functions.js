@@ -5,7 +5,7 @@ const functions = {
     needLength = needLength || 2;
     n = String(n);
     while (n.length < needLength) {
-      n = "0" + n;
+      n = '0' + n;
     }
     return n
   },
@@ -34,8 +34,8 @@ const functions = {
 
   // Случайный элемент массива
   getRandomElementArr: function (array) {
-    return array[getRandomInt(0, array.length - 1)];
-  }
+    return array[getRandomItnegralNumber(0, array.length - 1)];
+  },
 }
 
 export const addZeros = functions.addZeros;
