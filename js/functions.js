@@ -12,7 +12,7 @@ const functions = {
 
   // Случайное  целое число
   // и
-    // Случайное число с плавающей точкой с указанием количества цифр после запятой
+  // Случайное число с плавающей точкой с указанием количества цифр после запятой
   getRandomNumber: function (min, max, AFTERCOMMA = 0) {
     if (min < 0 || max < 0) {
       return -1;
@@ -25,10 +25,8 @@ const functions = {
     }
     return Number.parseFloat((Math.random() * (max - min) + min).toFixed(AFTERCOMMA));
   },
-
-    // getRandomNumber(1, 2, 3);
-    // console.log(getRandomNumber(1, 2, 3))
-
+  // getRandomNumber(1, 2, 3);
+  // console.log(getRandomNumber(1, 2, 3))
 
   // Случайный элемент массива
   getRandomElementArray: function (array) {

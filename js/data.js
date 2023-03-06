@@ -4,13 +4,14 @@ const TYPE = [
   'palace',
   'flat',
   'house',
-  'bungalow'];
+  'bungalow',
+];
 
 const AFTERCOMMA = 5;
 
 const AVATAR_COUNT = {
   min: 1,
-  max: 10
+  max: 10,
 };
 
 const COORDINATES = {
@@ -30,13 +31,13 @@ const FEATURES = [
   'parking',
   'washer',
   'elevator',
-  'conditioner'
+  'conditioner',
 ];
 
 const PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-  'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
 const Titles = [
@@ -66,7 +67,7 @@ const Description = [
   'Заезжай и живи',
 ];
 
-const getRandomLocation = ({x, y}) => {
+const getRandomLocation = () => {
   return { x: getRandomNumber(COORDINATES.x.min, COORDINATES.x.max, AFTERCOMMA) , y: getRandomNumber(COORDINATES.y.min, COORDINATES.y.max, AFTERCOMMA)};
 };
 
