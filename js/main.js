@@ -1,7 +1,4 @@
-import createAdvertisementList from './data.js';
-
-const OBJECT_COUNT = 10;
-
-let AdvertisementList = createAdvertisementList(OBJECT_COUNT);
+import {advertisementList} from './data.js';
+advertisementList;
 // eslint-disable-next-line no-console
-console.log(AdvertisementList)
+console.log(advertisementList)

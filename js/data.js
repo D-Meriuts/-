@@ -1,4 +1,6 @@
-import {addZeros, getRandomNumber, getRandomElementArray, getRandomElementsArray } from './functions.js';
+import {addZeros, getRandomNumber, getRandomElementArray, getRandomElementsArray } from './util.js';
+
+const OBJECT_COUNT = 10;
 
 const TYPE = [
   'palace',
@@ -93,14 +95,17 @@ const createAdvertisement = (location) => {
   };
 };
 
-const createAdvertisementList = (offersCount) => {
+const createAdvertisementList = (objectCount) => {
   const array = [];
-  while (offersCount > 0) {
+  while (objectCount > 0) {
     const location = getRandomLocation(COORDINATES);
     array.push(createAdvertisement(location));
-    offersCount--;
+    objectCount--;
   }
   return array;
 };
 
-export default createAdvertisementList;
+
+let advertisementList = createAdvertisementList(OBJECT_COUNT);
+
+export {advertisementList};
