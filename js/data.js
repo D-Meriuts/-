@@ -1,6 +1,8 @@
 import {addZeros, getRandomNumber, getRandomElementArray, getRandomElementsArray } from './util.js';
 
-const OBJECT_COUNT = 10;
+const OFFER_PHOTO = { width: 45, height: 40 };
+
+const OFFERS_COUNT = 10;
 
 const TYPE = [
   'palace',
@@ -9,11 +11,18 @@ const TYPE = [
   'bungalow',
 ];
 
+const TRANSLATE_TYPE = [
+  'Квартира',
+  'Бунгало',
+  'Дом',
+  'Дворец',
+];
+
 const AFTERCOMMA = 5;
 
 const AVATAR_COUNT = {
   min: 1,
-  max: 10,
+  max: 8,
 };
 
 const COORDINATES = {
@@ -61,19 +70,20 @@ const RandomNumber = {
 };
 
 const Description = [
-  'Солнечная сторона',
-  'Вся мебель новая',
-  'Во дворе есть десткая площадка',
-  'В цену входит паркинг',
-  'В цену входит к/у',
-  'Заезжай и живи',
+  'Солнечная сторона. ',
+  'Вся мебель новая. ',
+  'Во дворе есть десткая площадка. ',
+  'В цену входит паркинг. ',
+  'В цену входит к/у. ',
+  'Заезжай и живи. ',
 ];
 
 const getRandomLocation = () => {
   return { x: getRandomNumber(COORDINATES.x.min, COORDINATES.x.max, AFTERCOMMA) , y: getRandomNumber(COORDINATES.y.min, COORDINATES.y.max, AFTERCOMMA)};
 };
 
-const createAdvertisement = (location) => {
+const createAdvertisement = () => {
+  const location = getRandomLocation(COORDINATES);
   return {
     author: {
       avatar: 'img/avatars/user' + addZeros(getRandomNumber(AVATAR_COUNT.min, AVATAR_COUNT.max), 2) + '.png',
@@ -88,7 +98,7 @@ const createAdvertisement = (location) => {
       checkin: getRandomElementArray(TIME),
       checkout: getRandomElementArray(TIME),
       features: getRandomElementsArray(FEATURES),
-      description: getRandomElementsArray(Description),
+      description: getRandomElementsArray(Description).join(' '),
       photos: getRandomElementsArray(PHOTOS),
     },
     location: location,
@@ -105,7 +115,40 @@ const createAdvertisementList = (objectCount) => {
   return array;
 };
 
+const getTanslateType = (type) => {
+  for (let i = 0; i <= TYPE.length; i++) {
+    if (type === TYPE[i]) {
+      return TRANSLATE_TYPE[i];
+    }
+  }
+};
 
-let advertisementList = createAdvertisementList(OBJECT_COUNT);
+const createOfferPhotos = (photos) => {
+  const photosListFragment = document.createDocumentFragment();
+  photos.forEach((photo) => {
+    const cardPhoto = document.createElement('img');
+    cardPhoto.classList.add('popup__photo');
+    cardPhoto.src = photo;
+    cardPhoto.width = OFFER_PHOTO.width;
+    cardPhoto.height = OFFER_PHOTO.height;
+    cardPhoto.alt = 'Фотография жилья';
+    photosListFragment.appendChild(cardPhoto);
+  });
+  return photosListFragment;
+};
 
-export {advertisementList};
+const createOfferFeatures = (features) => {
+  const featuresItemsFragment = document.createDocumentFragment();
+  features.forEach((feature) => {
+    const featureItem = document.createElement('li');
+    featureItem.classList.add('popup__feature');
+    featureItem.classList.add(`popup__feature--${feature}`);
+    featuresItemsFragment.appendChild(featureItem);
+  });
+  return featuresItemsFragment;
+}
+
+
+const advertisementList = createAdvertisementList(OFFERS_COUNT);
+
+export {advertisementList, createAdvertisement, TYPE, getTanslateType, createOfferPhotos, createOfferFeatures};
