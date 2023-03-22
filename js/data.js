@@ -11,12 +11,7 @@ const TYPE = [
   'bungalow',
 ];
 
-const TRANSLATE_TYPE = [
-  'Квартира',
-  'Бунгало',
-  'Дом',
-  'Дворец',
-];
+const TRANSLATE_TYPE = { flat: { ru: 'Квартира', minPrice: 1000 }, bungalow: { ru: 'Бунгало', minPrice: 0 }, house: { ru: 'Дом', minPrice: 5000 }, palace: { ru: 'Дворец', minPrice: 10000 } };
 
 const AFTERCOMMA = 5;
 
@@ -64,7 +59,7 @@ const Price = {
   max: 1500,
 };
 
-const RandomNumber = {
+const NumberRange = {
   min: 1,
   max: 20,
 };
@@ -93,8 +88,8 @@ const createAdvertisement = () => {
       address: `${location.x}, ${location.y}`,
       price: getRandomNumber(Price.min, Price.max),
       type: getRandomElementArray(TYPE),
-      rooms: getRandomNumber(RandomNumber.min, RandomNumber.max),
-      guests: getRandomNumber(RandomNumber.min, RandomNumber.max),
+      rooms: getRandomNumber(NumberRange.min, NumberRange.max),
+      guests: getRandomNumber(NumberRange.min, NumberRange.max),
       checkin: getRandomElementArray(TIME),
       checkout: getRandomElementArray(TIME),
       features: getRandomElementsArray(FEATURES),
@@ -115,13 +110,7 @@ const createAdvertisementList = (objectCount) => {
   return array;
 };
 
-const getTanslateType = (type) => {
-  for (let i = 0; i <= TYPE.length; i++) {
-    if (type === TYPE[i]) {
-      return TRANSLATE_TYPE[i];
-    }
-  }
-};
+const advertisementList = createAdvertisementList(OFFERS_COUNT);
 
 const createOfferPhotos = (photos) => {
   const photosListFragment = document.createDocumentFragment();
@@ -149,6 +138,4 @@ const createOfferFeatures = (features) => {
 }
 
 
-const advertisementList = createAdvertisementList(OFFERS_COUNT);
-
-export {advertisementList, createAdvertisement, TYPE, getTanslateType, createOfferPhotos, createOfferFeatures};
+export {advertisementList, createAdvertisement, TRANSLATE_TYPE, createOfferPhotos, createOfferFeatures};
