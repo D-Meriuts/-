@@ -45,8 +45,7 @@ const functions = {
   // Новый массив из другого массива
   getRandomElementsArray: function (array) {
     return shuffleArray(array).slice(0, getRandomNumber(1, array.length));
-  }
-
+  },
 }
 
 export const addZeros = functions.addZeros;
@@ -54,6 +53,3 @@ export const getRandomNumber = functions.getRandomNumber;
 export const getRandomElementArray = functions.getRandomElementArray;
 export const shuffleArray = functions.shuffleArray;
 export const getRandomElementsArray = functions.getRandomElementsArray;
-
-
-
