@@ -56,12 +56,7 @@ const addformAndMapFiltersEnabled = () => {
 
 };
 
-
 address.setAttribute('readonly', 'readonly');
-
-
-
-
 
 
 export {mapFiltersDisabled, adFormDisabled, addformAndMapFiltersEnabled, address}
