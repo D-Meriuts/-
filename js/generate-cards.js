@@ -2,21 +2,23 @@ import {/*createAdvertisement,*/ TRANSLATE_TYPE, createOfferFeatures, createOffe
 
 // const mapCanvas = document.querySelector('#map-canvas');
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const card = cardTemplate.cloneNode(true);
-const offerAvatar = card.querySelector('.popup__avatar');
-const offerTitle = card.querySelector('.popup__title');
-const offerAdress = card.querySelector('.popup__text--address');
-const offerPrice = card.querySelector('.popup__text--price');
-const offerType = card.querySelector('.popup__type');
-const offerCapacity = card.querySelector('.popup__text--capacity');
-const offerTime = card.querySelector('.popup__text--time');
-const offerFeatures = card.querySelector('.popup__features');
-const offerDescription = card.querySelector('.popup__description');
-const offerPhotos = card.querySelector('.popup__photos');
+
 
 // const offer = createAdvertisement();
 
 const createCard = ({author: {avatar}, offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}}) => {
+  const card = cardTemplate.cloneNode(true);
+  const offerAvatar = card.querySelector('.popup__avatar');
+  const offerTitle = card.querySelector('.popup__title');
+  const offerAdress = card.querySelector('.popup__text--address');
+  const offerPrice = card.querySelector('.popup__text--price');
+  const offerType = card.querySelector('.popup__type');
+  const offerCapacity = card.querySelector('.popup__text--capacity');
+  const offerTime = card.querySelector('.popup__text--time');
+  const offerFeatures = card.querySelector('.popup__features');
+  const offerDescription = card.querySelector('.popup__description');
+  const offerPhotos = card.querySelector('.popup__photos');
+
   if (avatar) {offerAvatar.src = avatar} else {
     offerAvatar.src = 'img/avatars/default.png'
   }
@@ -74,3 +76,4 @@ const createCard = ({author: {avatar}, offer: {title, address, price, type, room
 // const cardItem = createCard(offer);
 // mapCanvas.appendChild(cardItem)
 export {createCard};
+
