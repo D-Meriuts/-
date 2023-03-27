@@ -46,6 +46,10 @@ const functions = {
   getRandomElementsArray: function (array) {
     return shuffleArray(array).slice(0, getRandomNumber(1, array.length));
   },
+
+  getAddress: function ({lat, lng}) {
+    return `${lat.toFixed(5)}, ${lng.toFixed(5)}`
+  },
 }
 
 export const addZeros = functions.addZeros;
@@ -53,3 +57,4 @@ export const getRandomNumber = functions.getRandomNumber;
 export const getRandomElementArray = functions.getRandomElementArray;
 export const shuffleArray = functions.shuffleArray;
 export const getRandomElementsArray = functions.getRandomElementsArray;
+export const getAddress = functions.getAddress;

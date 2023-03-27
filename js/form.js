@@ -7,7 +7,7 @@ const timeInSelect = adForm.querySelector('#timein');
 const timeOutSelect = adForm.querySelector('#timeout');
 // const roomNumber = adForm.querySelector('#room_number');
 const mapFilters = document.querySelector('.map__filters');
-
+const address = adForm.querySelector('#address');
 
 housingTypeSelect.addEventListener('change', () => {
   priceInput.min = TRANSLATE_TYPE[housingTypeSelect.value].minPrice;
@@ -41,8 +41,22 @@ const adFormDisabled = () => {
 
 };
 
-mapFiltersDisabled();
-adFormDisabled();
+const addformAndMapFiltersEnabled = () => {
+  mapFilters.classList.remove('map__filters--disabled');
+
+  for (let i = 0; i < mapFilters.children.length; i++) {
+    mapFilters.children[i].removeAttribute('disabled');
+  }
+
+  adForm.classList.remove('ad-form--disabled');
+
+  for (let i = 0; i < adForm.children.length; i++) {
+    adForm.children[i].removeAttribute('disabled');
+  }
+
+};
+
+address.setAttribute('readonly', 'readonly');
 
 
-
+export {mapFiltersDisabled, adFormDisabled, addformAndMapFiltersEnabled, address}
