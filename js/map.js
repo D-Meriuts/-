@@ -69,5 +69,4 @@ advertisementList.forEach(offer => {
     },
   ).addTo(map)
     .bindPopup(createCard(offer));
-
 });
