@@ -22,6 +22,11 @@ const roomCapacityHandler = () => {
           } else {
             option.removeAttribute('disabled');
           }
+          if (((option.value === '1'))) {
+            option.setAttribute('selected', 'selected')
+          } else {
+            option.removeAttribute('selected')
+          }
         });
         break;
       case '2':
@@ -30,6 +35,11 @@ const roomCapacityHandler = () => {
             option.setAttribute('disabled', 'disabled')
           } else {
             option.removeAttribute('disabled');
+          }
+          if (((option.value === '2'))) {
+            option.setAttribute('selected', 'selected')
+          } else {
+            option.removeAttribute('selected')
           }
         });
         break;
@@ -40,6 +50,11 @@ const roomCapacityHandler = () => {
           } else {
             option.removeAttribute('disabled');
           }
+          if (((option.value === '3'))) {
+            option.setAttribute('selected', 'selected')
+          } else {
+            option.removeAttribute('selected')
+          }
         });
         break;
       case '100':
@@ -48,6 +63,11 @@ const roomCapacityHandler = () => {
             option.setAttribute('disabled', 'disabled')
           } else {
             option.removeAttribute('disabled');
+          }
+          if (((option.value === '0'))) {
+            option.setAttribute('selected', 'selected')
+          } else {
+            option.removeAttribute('selected')
           }
         });
         break;
