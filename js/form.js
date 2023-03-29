@@ -33,24 +33,24 @@ const roomCapacityHandler = () => {
           }
         });
         break;
-        case '3':
-          capacityOptions.forEach(option => {
-            if ((option.value !== '1') && (option.value !== '2') && (option.value !== '3')) {
-              option.setAttribute('disabled', 'disabled')
-            } else {
-              option.removeAttribute('disabled');
-            }
-          });
-          break;
-          case '100':
-            capacityOptions.forEach(option => {
-              if ((option.value !== '0')) {
-                option.setAttribute('disabled', 'disabled')
-              } else {
-                option.removeAttribute('disabled');
-              }
-            });
-            break;
+      case '3':
+        capacityOptions.forEach(option => {
+          if ((option.value !== '1') && (option.value !== '2') && (option.value !== '3')) {
+            option.setAttribute('disabled', 'disabled')
+          } else {
+            option.removeAttribute('disabled');
+          }
+        });
+        break;
+      case '100':
+        capacityOptions.forEach(option => {
+          if ((option.value !== '0')) {
+            option.setAttribute('disabled', 'disabled')
+          } else {
+            option.removeAttribute('disabled');
+          }
+        });
+        break;
     }
   })
 };
