@@ -5,9 +5,56 @@ const housingTypeSelect = adForm.querySelector('#type');
 const priceInput = adForm.querySelector('#price');
 const timeInSelect = adForm.querySelector('#timein');
 const timeOutSelect = adForm.querySelector('#timeout');
-// const roomNumber = adForm.querySelector('#room_number');
 const mapFilters = document.querySelector('.map__filters');
 const address = adForm.querySelector('#address');
+const roomNumberSelect = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
+
+const roomCapacityHandler = () => {
+  const capacityOptions = capacity.querySelectorAll('option');
+
+  roomNumberSelect.addEventListener('change', (evt) => {
+    switch(evt.target.value) {
+      case '1':
+        capacityOptions.forEach(option => {
+          if (option.value !== '1') {
+            option.setAttribute('disabled', 'disabled')
+          } else {
+            option.removeAttribute('disabled');
+          }
+        });
+        break;
+      case '2':
+        capacityOptions.forEach(option => {
+          if ((option.value !== '1') && (option.value !== '2')) {
+            option.setAttribute('disabled', 'disabled')
+          } else {
+            option.removeAttribute('disabled');
+          }
+        });
+        break;
+        case '3':
+          capacityOptions.forEach(option => {
+            if ((option.value !== '1') && (option.value !== '2') && (option.value !== '3')) {
+              option.setAttribute('disabled', 'disabled')
+            } else {
+              option.removeAttribute('disabled');
+            }
+          });
+          break;
+          case '100':
+            capacityOptions.forEach(option => {
+              if ((option.value !== '0')) {
+                option.setAttribute('disabled', 'disabled')
+              } else {
+                option.removeAttribute('disabled');
+              }
+            });
+            break;
+    }
+  })
+};
+roomCapacityHandler();
 
 housingTypeSelect.addEventListener('change', () => {
   priceInput.min = TRANSLATE_TYPE[housingTypeSelect.value].minPrice;
@@ -21,7 +68,6 @@ timeInSelect.addEventListener('change', () => {
 timeOutSelect.addEventListener('change', () => {
   timeInSelect.value = timeOutSelect.value;
 });
-
 
 const mapFiltersDisabled = () => {
   mapFilters.classList.add('map__filters--disabled');
