@@ -11,7 +11,7 @@ const TYPE = [
   'bungalow',
 ];
 
-const TRANSLATE_TYPE = { flat: { ru: 'Квартира', minPrice: 1000 }, bungalow: { ru: 'Бунгало', minPrice: 0 }, house: { ru: 'Дом', minPrice: 5000 }, palace: { ru: 'Дворец', minPrice: 10000 } };
+const TRANSLATE_TYPE = { flat: { ru: 'Квартира', minPrice: 1000 }, bungalow: { ru: 'Бунгало', minPrice: 0 }, hotel: {ru: 'Отель', minPrice: 3000 }, house: { ru: 'Дом', minPrice: 5000 }, palace: { ru: 'Дворец', minPrice: 10000 } };
 
 const AFTERCOMMA = 5;
 
