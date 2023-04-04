@@ -88,6 +88,7 @@ roomCapacityHandler();
 housingTypeSelect.addEventListener('change', () => {
   priceInput.min = TRANSLATE_TYPE[housingTypeSelect.value].minPrice;
   priceInput.placeholder = TRANSLATE_TYPE[housingTypeSelect.value].minPrice;
+  priceInput.min = TRANSLATE_TYPE[housingTypeSelect.value].minPrice;
 });
 
 timeInSelect.addEventListener('change', () => {
