@@ -378,6 +378,16 @@ fieldset {
   border-radius: 4px;
 }
 
+.error-input input {
+  border: 1px solid #ff0000;
+
+}
+.error-label {
+  color: #ff0000;
+  display: block;
+  margin-bottom: 10px;
+}
+
 .ad-form__element input:hover,
 .ad-form__element select:hover,
 .ad-form__element textarea:hover {

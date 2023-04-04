@@ -89,11 +89,12 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="title">Заголовок объявления</label>
-          <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио" required minlength="30" maxlength="100">
+          <!-- заголовок -->
+          <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио"  data-required="true" data-min-length="30" data-max-length="100" >
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text">
+          <input id="address" name="address" type="text" data-required="true">
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
@@ -107,7 +108,8 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" type="number" placeholder="5000" required  max="1000000">
+          <!-- стоимость -->
+          <input id="price" name="price" type="number" placeholder="5000" min="0" max="1000000" data-required="true">
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
@@ -124,7 +126,7 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="room_number">Количество комнат</label>
-          <select id="room_number" name="rooms" required>
+          <select id="room_number" name="rooms">
             <option value="1" selected>1 комната</option>
             <option value="2">2 комнаты</option>
             <option value="3">3 комнаты</option>
@@ -232,7 +234,7 @@
     </div>
   </template>
 
-  <script src="js/main.js" type="module"></script>
+  <script src="js/main.js" type="module" defer></script>
   <!-- <script src="leaflet/leaflet.js.map"></script> -->
   <script src="leaflet/leaflet.js"></script>
 
