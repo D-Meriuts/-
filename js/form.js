@@ -159,6 +159,7 @@ const validation = (form) => {
   form.querySelectorAll('input').forEach(input => {
     removeError(input);
 
+
     if (input.dataset.minLength) {
       if (input.value.length < input.dataset.minLength) {
         removeError(input);
@@ -179,6 +180,14 @@ const validation = (form) => {
       if (input.value == '') {
         removeError(input);
         createError(input, 'Поле не заполнено');
+        result = false
+      }
+    }
+
+    if (input.dataset.min) {
+      if (input.value < TRANSLATE_TYPE[housingTypeSelect.value].minPrice) {
+        removeError(input);
+        createError(input, 'Значение ниже минимального');
         result = false
       }
     }
