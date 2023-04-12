@@ -1,6 +1,6 @@
 import {addformAndMapFiltersEnabled, address} from './form.js'
 import { getAddress } from './util.js';
-import { advertisementList} from './data.js';
+// import { advertisementList} from './data.js';
 import { createCard } from './generate-cards.js';
 
 const DEFAULT_COORDINATES = { lat: 35.652832, lng: 139.839478};
@@ -57,16 +57,36 @@ marker.on('moveend', (evt) => {
   address.value = getAddress(evt.target.getLatLng());
 });
 
-advertisementList.forEach(offer => {
-  L.marker(
-    {
-      lat: offer.location.x,
-      lng: offer.location.y,
-    },
-    {
-      icon: pinIcon,
-      keepInView: true,
-    },
-  ).addTo(map)
-    .bindPopup(createCard(offer));
-});
+// advertisementList.forEach(offer => {
+//   L.marker(
+//     {
+//       lat: offer.location.x,
+//       lng: offer.location.y,
+//     },
+//     {
+//       icon: pinIcon,
+//       keepInView: true,
+//     },
+//   ).addTo(map)
+//     .bindPopup(createCard(offer));
+// });
+import { getData } from './data.js';
+
+const renderOffers = (offers) => {
+  offers.forEach(offer => {
+    L.marker(
+      {
+        lat: offer.location.lat,
+        lng: offer.location.lng,
+      },
+      {
+        icon: pinIcon,
+      },
+    ).addTo(map)
+      .bindPopup(createCard(offer));
+  });
+}
+
+getData((offers) => {
+  renderOffers(offers);
+})
