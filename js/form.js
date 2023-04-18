@@ -1,4 +1,7 @@
-import {TRANSLATE_TYPE} from './data.js';
+import {TRANSLATE_TYPE, sendData} from './data.js';
+import {showErrorMessage, showSuccessMessage} from './util.js';
+import { resetAddress } from './map.js';
+
 
 const adForm = document.querySelector('.ad-form');
 const housingTypeSelect = adForm.querySelector('#type');
@@ -10,6 +13,7 @@ const address = adForm.querySelector('#address');
 const roomNumberSelect = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const capacityOptions = capacity.querySelectorAll('option');
+const resetButton = adForm.querySelector('.ad-form__reset');
 
 // меняет количество гостей на 1 при загрузке страницы и блокирует остальные
 document.addEventListener('DOMContentLoaded', function() {
@@ -117,7 +121,8 @@ const adFormDisabled = () => {
 
 };
 
-const addformAndMapFiltersEnabled = () => {
+
+const addFormAndMapFiltersEnabled = () => {
   mapFilters.classList.remove('map__filters--disabled');
 
   for (let i = 0; i < mapFilters.children.length; i++) {
@@ -132,7 +137,13 @@ const addformAndMapFiltersEnabled = () => {
 
 };
 
+
+
 address.setAttribute('readonly', 'readonly');
+
+const setAddresInputValue = (value) => {
+  address.value = value;
+};
 
 const validation = (form) => {
 
@@ -196,13 +207,45 @@ const validation = (form) => {
   return result
 }
 
+const onSubmitFormValidation = () => {
+  adForm.addEventListener('submit', function(evt){
+    if (validation(this) == false) {
+      evt.preventDefault()
+    }
+  })
+};
 
-adForm.addEventListener('submit', function(evt){
+onSubmitFormValidation();
 
-  if (validation(this) == false) {
-    evt.preventDefault()
-  }
+const onSubmitAdForm = (onSuccess, onFail) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      () => onSuccess(),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+const resetAdForm = () => {
+  adForm.reset();
+  resetAddress();
+};
+
+resetAdForm();
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetAdForm();
 })
 
+onSubmitAdForm(() => {
+  showSuccessMessage();
+  resetAdForm();
+}, showErrorMessage);
 
-export {mapFiltersDisabled, adFormDisabled, addformAndMapFiltersEnabled, address}
+mapFiltersDisabled();
+adFormDisabled();
+
+export {mapFiltersDisabled, adFormDisabled, addFormAndMapFiltersEnabled, setAddresInputValue}
