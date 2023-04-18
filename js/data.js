@@ -36,12 +36,16 @@ const createOfferFeatures = (features) => {
 
 // const getData = (onSuccess, onFail) => {
 //   fetch(GET_DATA_URL)
-//     .then((response) => response.json())
-//     .then((offers) => {
-//       onSuccess(offers.slice(0, OFFERS_COUNT));
+//     .then((response) => {
+//       if (response.ok) {
+//         return response.json();
+//       }
+//       throw new Error('Ошибка загрузки данных с сервера');
 //     })
-//     .catch(() => {
-//       onFail('Ошибка загрузки данных с сервера');
+//     .then((cards) => onSuccess(cards))
+//     .catch((er) => {
+//       er.message = 'Ошибка загрузки данных с сервера';
+//       onFail(er);
 //     });
 // };
 
@@ -50,48 +54,49 @@ const createOfferFeatures = (features) => {
 //     {
 //       method: 'POST',
 //       body: body,
-//     },
+//     }
 //   )
-//     .then((response) => {
-//       if (response.ok) {
-//         onSuccess();
-//       } else {
-//         onFail('Ошибка загрузки данных с сервера');
-//       }
-//     })
+//     .then((response) => response.ok ? onSuccess() : onFail())
 //     .catch(() => {
-//       onFail('Ошибка загрузки данных с сервера');
+//       onFail();
 //     });
 // };
 
-const getData = (onSuccess, onFail) => {
+// Функция получения данных с сервера
+
+const getData = (onSuccess) => {
   fetch(GET_DATA_URL)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Ошибка загрузки данных с сервера');
+    .then((response) => response.json())
+    .then((adsList) => {
+      onSuccess(adsList);
     })
-    .then((cards) => onSuccess(cards))
-    .catch((er) => {
-      er.message = 'Ошибка загрузки данных с сервера';
-      onFail(er);
+    .catch(() => {
+      showAlert('Не удалось получить данные с сервера.');
     });
 };
 
+// Функция отправки данных на сервер
+
 const sendData = (onSuccess, onFail, body) => {
-  fetch(SEND_DATA_URL,
+  fetch(
+    SEND_DATA_URL,
     {
       method: 'POST',
-      body: body,
-    }
+      body,
+    },
   )
-    .then((response) => response.ok ? onSuccess() : onFail())
+    .then((response) => {
+      if (response.ok) {
+        onSuccess();
+      }
+      else {
+        onFail();
+      }
+    })
     .catch(() => {
       onFail();
     });
 };
-
 
 export {TRANSLATE_TYPE, OFFERS_COUNT, createOfferPhotos, createOfferFeatures, getData, sendData};
 
