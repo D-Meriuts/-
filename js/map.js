@@ -1,4 +1,4 @@
-import {addFormAndMapFiltersEnabled, setAddresInputValue} from './form.js'
+import {adFormAndMapFiltersEnabled, setAddresInputValue} from './form.js'
 import { getAddress, showErrorMessage } from './util.js';
 import { createCard } from './generate-cards.js';
 import { getData, OFFERS_COUNT} from './data.js';
@@ -12,7 +12,7 @@ const map = L.map('map-canvas', {fadeAnimation: false});
 
 map.on('load', () => {
   setTimeout(() => {
-    addFormAndMapFiltersEnabled();
+    adFormAndMapFiltersEnabled();
   }, 0);
 })
 .setView({

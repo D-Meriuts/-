@@ -15,6 +15,78 @@ const capacity = adForm.querySelector('#capacity');
 const capacityOptions = capacity.querySelectorAll('option');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
+const avatar = adForm.querySelector('.ad-form-header__preview img');
+const titleInput = adForm.querySelector('#title');
+const description = adForm.querySelector('#description');
+const features = adForm.querySelectorAll('.features__checkbox');
+const photos = adForm.querySelectorAll('.ad-form__photo');
+
+
+
+/**
+ * Начальные значения элементов формы - сразу после загрузки страницы, до ввода пользователем
+ */
+const defaultFormSetting = {
+  avatarKey: avatar.src,
+  // Значение title = пустая строка (как изначально)
+  titleKey: titleInput.value,
+  // Значение типа жилья = пустая строка (как изначально)
+  typeKey: housingTypeSelect.value,
+  // Значение цены = пустая строка (как изначально)
+  priceKey: priceInput.value,
+  // Значение цены по умолчанию в плейсхолдере = значение плейсхолдера (как изначально)
+  pricePlaceholder: priceInput.placeholder,
+  // Значение времени заезда = значение value (как изначально)
+  timeInKey: timeInSelect.value,
+  // Значение времени выезда = значение value (как изначально)
+  timeOutKey: timeOutSelect.value,
+  // Значение количества комнат = значение value (как изначально)
+  roomNumberKey: roomNumberSelect.value,
+  // Значение количества жильцов = значение value (как изначально)
+  capacityKey: capacity.value,
+  // Значение поля ОПИСАНИЕ = значение value (как изначально)
+  descriptionKey: description.value,
+};
+
+/**
+ * Функция сброса введённых данных до дефолтных при нажатии кнопки ОЧИСТИТЬ или при удачной отправке формы
+ */
+const resetForm = () => {
+  // Сбрасываем путь у картинки на дефолтный
+  avatar.src = defaultFormSetting.avatarKey;
+  // Сбрасываем значение у заголовка на дефолтный (пустая строка)
+  titleInput.value = defaultFormSetting.titleKey;
+  // Сбрасываем значение у типа жилья на дефолтный (Квартира)
+  housingTypeSelect.value = defaultFormSetting.typeKey;
+  // Сбрасываем значение у цены на дефолтный (пустая строка)
+  priceInput.value = defaultFormSetting.priceKey;
+  // Сбрасываем плейсхолдер у цены на дефолтный (5000)
+  priceInput.placeholder = defaultFormSetting.pricePlaceholder;
+  // Сбрасываем время заезда на дефолтное (12:00)
+  timeInSelect.value = defaultFormSetting.timeInKey;
+  // Сбрасываем время выезда на дефолтное (12:00)
+  timeOutSelect.value = defaultFormSetting.timeOutKey;
+  // Сбрасываем количество комнат на дефолтное (1)
+  roomNumberSelect.value = defaultFormSetting.roomNumberKey;
+  // Сбрасываем количество жильцов (вместимость) на дефолтное (1 гость)
+  capacity.value = defaultFormSetting.capacityKey;
+  // Сбрасываем описание на дефолтное (пустая строка)
+  description.value = defaultFormSetting.descriptionKey;
+
+  // Убираем checked у чекбоксов
+  features.forEach((item) => {
+    item.checked = false;
+  });
+
+  // Очищаем загруженные фотки объявления
+  photos.innerHTML = '';
+
+};
+
+
+
+
+
 // меняет количество гостей на 1 при загрузке страницы и блокирует остальные
 document.addEventListener('DOMContentLoaded', function() {
   if (roomNumberSelect.value === '1') {
@@ -122,7 +194,7 @@ const adFormDisabled = () => {
 };
 
 
-const addFormAndMapFiltersEnabled = () => {
+const adFormAndMapFiltersEnabled = () => {
   mapFilters.classList.remove('map__filters--disabled');
 
   for (let i = 0; i < mapFilters.children.length; i++) {
@@ -136,8 +208,6 @@ const addFormAndMapFiltersEnabled = () => {
   }
 
 };
-
-
 
 address.setAttribute('readonly', 'readonly');
 
@@ -168,8 +238,10 @@ const validation = (form) => {
   let result = true;
 
   form.querySelectorAll('input').forEach(input => {
-    removeError(input);
 
+    setTimeout(() => {removeError(input);
+
+    }, 5000);
 
     if (input.dataset.minLength) {
       if (input.value.length < input.dataset.minLength) {
@@ -194,28 +266,28 @@ const validation = (form) => {
         result = false
       }
     }
-
-    if (input.dataset.min) {
-      if (input.value < TRANSLATE_TYPE[housingTypeSelect.value].minPrice) {
-        removeError(input);
-        createError(input, 'Значение ниже минимального');
-        result = false
-      }
-    }
   });
 
   return result
 }
 
-const onSubmitFormValidation = () => {
+
+
+const formValidation = () => {
+  adForm.addEventListener('input', function(evt){
+    if (validation(this) == false) {
+      evt.preventDefault()
+    }
+  });
   adForm.addEventListener('submit', function(evt){
     if (validation(this) == false) {
       evt.preventDefault()
     }
-  })
+  });
+
 };
 
-onSubmitFormValidation();
+formValidation();
 
 const onSubmitAdForm = (onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
@@ -229,15 +301,18 @@ const onSubmitAdForm = (onSuccess, onFail) => {
 };
 
 const resetAdForm = () => {
-  adForm.reset();
+  resetForm();
   resetAddress();
 };
-
 resetAdForm();
+
 
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetAdForm();
+  resetAddress();
+
+
 })
 
 onSubmitAdForm(() => {
@@ -248,4 +323,4 @@ onSubmitAdForm(() => {
 mapFiltersDisabled();
 adFormDisabled();
 
-export {mapFiltersDisabled, adFormDisabled, addFormAndMapFiltersEnabled, setAddresInputValue}
+export {mapFiltersDisabled, adFormDisabled, adFormAndMapFiltersEnabled, setAddresInputValue}
