@@ -108,16 +108,19 @@ const mapFiltersDisabled = () => {
 
 };
 
+mapFiltersDisabled();
+
 const adFormDisabled = () => {
   adForm.classList.add('ad-form--disabled');
 
   for (let i = 0; i < adForm.children.length; i++) {
     adForm.children[i].setAttribute('disabled', 'disabled');
   }
-
 };
 
-const addformAndMapFiltersEnabled = () => {
+adFormDisabled();
+
+const enableForms = () => {
   mapFilters.classList.remove('map__filters--disabled');
 
   for (let i = 0; i < mapFilters.children.length; i++) {
@@ -129,10 +132,12 @@ const addformAndMapFiltersEnabled = () => {
   for (let i = 0; i < adForm.children.length; i++) {
     adForm.children[i].removeAttribute('disabled');
   }
-
 };
 
-address.setAttribute('readonly', 'readonly');
+const setCoordinates = (coordinates) => {
+  address.setAttribute('readonly','readonly');
+  address.value = `${  coordinates.lat.toFixed(5)  }, ${  coordinates.lng.toFixed(5)}`;
+};
 
 const validation = (form) => {
 
@@ -205,4 +210,4 @@ adForm.addEventListener('submit', function(evt){
 })
 
 
-export {mapFiltersDisabled, adFormDisabled, addformAndMapFiltersEnabled, address}
+export {mapFiltersDisabled, enableForms, adFormDisabled,  setCoordinates}

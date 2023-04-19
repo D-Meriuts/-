@@ -1,15 +1,21 @@
-import {addformAndMapFiltersEnabled, address} from './form.js'
-import { getAddress } from './util.js';
-import { advertisementList} from './data.js';
-import { createCard } from './generate-cards.js';
+import {enableForms, setCoordinates} from './form.js'
+import { createAdsArray} from './data.js';
+import { createCard } from './card.js';
 
-const DEFAULT_COORDINATES = { lat: 35.652832, lng: 139.839478};
+const DEFAULT_COORDINATES = { lat: 35.67752, lng: 139.74944};
 
-// добавление карты
-/* global L:readonly */
+// Создание массива объявлений со случайными данными
+const OFFERS_COUNT = 10;
+const adsList = createAdsArray(OFFERS_COUNT);
+
+// Установка начальных координат карты
+setCoordinates(DEFAULT_COORDINATES);
+
+
+// Загрузка карты и включение доступа к форме по загрузке
 const map = L.map('map-canvas')
   .on('load', () => {
-    addformAndMapFiltersEnabled();
+    enableForms();
   })
   .setView({
     lat: DEFAULT_COORDINATES.lat,
@@ -18,28 +24,19 @@ const map = L.map('map-canvas')
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>',
+{
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
 
-// главная иконка маркера
+// Установка главной метки
 const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
+  iconUrl: '../img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
 
-// обычная иконка маркера
-const pinIcon = L.icon({
-  iconUrl: './img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-})
-
-// добавление маркера на карту
-const marker = L.marker(
+const mainPinMarker = L.marker(
   {
     lat: DEFAULT_COORDINATES.lat,
     lng: DEFAULT_COORDINATES.lng,
@@ -49,24 +46,105 @@ const marker = L.marker(
     icon: mainPinIcon,
   },
 );
-marker.addTo(map)
 
-address.value = getAddress(marker.getLatLng());
+mainPinMarker.addTo(map);
 
-marker.on('moveend', (evt) => {
-  address.value = getAddress(evt.target.getLatLng());
+// Получение адреса главной метки от ее перемещения по карте
+mainPinMarker.on('moveend', (evt) => {
+  const newCoordinates = evt.target.getLatLng();
+  setCoordinates(newCoordinates);
 });
 
-advertisementList.forEach(offer => {
-  L.marker(
+// Вывод маркеров объявлений на основе данных сгенерированного массива объявлений
+adsList.forEach((offer) => {
+  const icon = L.icon({
+    iconUrl: '../img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const marker = L.marker(
     {
       lat: offer.location.x,
       lng: offer.location.y,
     },
     {
-      icon: pinIcon,
-      keepInView: true,
+      icon,
     },
-  ).addTo(map)
-    .bindPopup(createCard(offer));
+  );
+  marker
+    .addTo(map)
+    .bindPopup(
+      createCard(offer),
+      {
+        keepInView: true,
+      },
+    );
 });
+
+
+// // добавление карты
+// /* global L:readonly */
+// const map = L.map('map-canvas')
+//   .on('load', () => {
+//     addformAndMapFiltersEnabled();
+//   })
+//   .setView({
+//     lat: DEFAULT_COORDINATES.lat,
+//     lng: DEFAULT_COORDINATES.lng,
+//   }, 12);
+
+// L.tileLayer(
+//   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+//   {
+//     // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>',
+//   },
+// ).addTo(map);
+
+// // главная иконка маркера
+// const mainPinIcon = L.icon({
+//   iconUrl: './img/main-pin.svg',
+//   iconSize: [52, 52],
+//   iconAnchor: [26, 52],
+// });
+
+// // обычная иконка маркера
+// const pinIcon = L.icon({
+//   iconUrl: './img/pin.svg',
+//   iconSize: [40, 40],
+//   iconAnchor: [20, 40],
+// })
+
+// // добавление маркера на карту
+// const marker = L.marker(
+//   {
+//     lat: DEFAULT_COORDINATES.lat,
+//     lng: DEFAULT_COORDINATES.lng,
+//   },
+//   {
+//     draggable: true,
+//     icon: mainPinIcon,
+//   },
+// );
+// marker.addTo(map)
+
+// address.value = getAddress(marker.getLatLng());
+
+// marker.on('moveend', (evt) => {
+//   address.value = getAddress(evt.target.getLatLng());
+// });
+
+// advertisementList.forEach(offer => {
+//   L.marker(
+//     {
+//       lat: offer.location.x,
+//       lng: offer.location.y,
+//     },
+//     {
+//       icon: pinIcon,
+//       keepInView: true,
+//     },
+//   ).addTo(map)
+//     .bindPopup(createCard(offer));
+// });

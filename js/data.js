@@ -2,7 +2,6 @@ import {addZeros, getRandomNumber, getRandomElementArray, getRandomElementsArray
 
 const OFFER_PHOTO = { width: 45, height: 40 };
 
-const OFFERS_COUNT = 10;
 
 const TYPE = [
   'palace',
@@ -100,7 +99,7 @@ const createAdvertisement = () => {
   };
 };
 
-const createAdvertisementList = (objectCount) => {
+const createAdsArray = (objectCount) => {
   const array = [];
   while (objectCount > 0) {
     const location = getRandomLocation(COORDINATES);
@@ -110,7 +109,7 @@ const createAdvertisementList = (objectCount) => {
   return array;
 };
 
-const advertisementList = createAdvertisementList(OFFERS_COUNT);
+
 
 const createOfferPhotos = (photos) => {
   const photosListFragment = document.createDocumentFragment();
@@ -138,4 +137,4 @@ const createOfferFeatures = (features) => {
 }
 
 
-export {advertisementList, createAdvertisement, TRANSLATE_TYPE, createOfferPhotos, createOfferFeatures};
+export {createAdvertisement, createAdsArray, TRANSLATE_TYPE, createOfferPhotos, createOfferFeatures};

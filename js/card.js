@@ -25,6 +25,7 @@ const createCard = ({author: {avatar}, offer: {title, address, price, type, room
 
   if (title) {
     offerTitle.textContent = title
+
   } else {
     offerTitle.remove();
   }
