@@ -34,33 +34,6 @@ const createOfferFeatures = (features) => {
   return featuresItemsFragment;
 }
 
-// const getData = (onSuccess, onFail) => {
-//   fetch(GET_DATA_URL)
-//     .then((response) => {
-//       if (response.ok) {
-//         return response.json();
-//       }
-//       throw new Error('Ошибка загрузки данных с сервера');
-//     })
-//     .then((cards) => onSuccess(cards))
-//     .catch((er) => {
-//       er.message = 'Ошибка загрузки данных с сервера';
-//       onFail(er);
-//     });
-// };
-
-// const sendData = (onSuccess, onFail, body) => {
-//   fetch(SEND_DATA_URL,
-//     {
-//       method: 'POST',
-//       body: body,
-//     }
-//   )
-//     .then((response) => response.ok ? onSuccess() : onFail())
-//     .catch(() => {
-//       onFail();
-//     });
-// };
 
 // Функция получения данных с сервера
 

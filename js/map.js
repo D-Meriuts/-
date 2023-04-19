@@ -83,7 +83,8 @@ const renderOffers = (offers) => {
 }
 
 getData((offers) => {
-  renderOffers(offers.slice(0, OFFERS_COUNT));
+  // renderOffers(offers.slice(0, OFFERS_COUNT));
+  renderOffers(offers)
 }, showErrorMessage);
 
 export {resetAddress}
