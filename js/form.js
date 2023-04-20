@@ -161,8 +161,11 @@ const validation = (form) => {
 
   let result = true;
 
+
   form.querySelectorAll('input').forEach(input => {
-    removeError(input);
+    setTimeout(() => {removeError(input);
+
+    }, 5000);
 
 
     if (input.dataset.minLength) {
@@ -189,25 +192,31 @@ const validation = (form) => {
       }
     }
 
-    if (input.dataset.min) {
-      if (input.value < TRANSLATE_TYPE[housingTypeSelect.value].minPrice) {
-        removeError(input);
-        createError(input, 'Значение ниже минимального');
-        result = false
-      }
-    }
+    // if (input.dataset.min) {
+    //   if (input.value < TRANSLATE_TYPE[housingTypeSelect.value].minPrice) {
+    //     removeError(input);
+    //     createError(input, 'Значение ниже минимального');
+    //     result = false
+    //   }
+    // }
   });
 
   return result
 }
 
+const formValidation = () => {
+  adForm.addEventListener('input', function(evt){
+    if (validation(this) == false) {
+      evt.preventDefault()
+    }
+  });
+  adForm.addEventListener('submit', function(evt){
+    if (validation(this) == false) {
+      evt.preventDefault()
+    }
+  });
+};
 
-adForm.addEventListener('submit', function(evt){
-
-  if (validation(this) == false) {
-    evt.preventDefault()
-  }
-})
-
+formValidation();
 
 export {mapFiltersDisabled, enableForms, adFormDisabled,  setCoordinates}
