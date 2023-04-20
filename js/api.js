@@ -3,7 +3,7 @@ import { showAlert } from "./util.js";
 // Функция получения данных с сервера
 
 const getData = (onSuccess) => {
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
+    fetch('https://23.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((adsList) => {
       onSuccess(adsList);

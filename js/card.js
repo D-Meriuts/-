@@ -1,10 +1,6 @@
-import {/*createAdvertisement,*/ TRANSLATE_TYPE, createOfferFeatures, createOfferPhotos} from './data.js';
+import {TRANSLATE_TYPE, createOfferFeatures, createOfferPhotos} from './data.js';
 
-// const mapCanvas = document.querySelector('#map-canvas');
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-
-
-// const offer = createAdvertisement();
 
 const createCard = ({author: {avatar}, offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos}}) => {
   const card = cardTemplate.cloneNode(true);
@@ -74,7 +70,5 @@ const createCard = ({author: {avatar}, offer: {title, address, price, type, room
   return card
 }
 
-// const cardItem = createCard(offer);
-// mapCanvas.appendChild(cardItem)
 export {createCard};
 

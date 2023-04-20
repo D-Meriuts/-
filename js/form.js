@@ -125,7 +125,7 @@ const adFormDisabled = () => {
 adFormDisabled();
 
 
-const enableForms = () => {
+const enableFormsAndFilters = () => {
   mapFilters.classList.remove('map__filters--disabled');
 
   for (let i = 0; i < mapFilters.children.length; i++) {
@@ -139,7 +139,7 @@ const enableForms = () => {
   }
 };
 
-enableForms(); /*проверить*/
+// enableFormsAndFilters(); /*проверить*/
 
 
 // Вспомогательная функция для записи координат по движению главной метки
@@ -151,7 +151,7 @@ const setCoordinates = (coordinates) => {
 
 setCoordinates(getDefauldCoordinates);
 
-makeInitialization(); /*проверить*/
+makeInitialization(enableFormsAndFilters()); /*проверить*/
 
 
 
@@ -253,4 +253,4 @@ resetButton.addEventListener('click', (evt) => {
 });
 
 
-export {mapFiltersDisabled, enableForms, adFormDisabled,  setCoordinates}
+export {mapFiltersDisabled, enableFormsAndFilters, adFormDisabled,  setCoordinates}

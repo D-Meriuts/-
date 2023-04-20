@@ -1,4 +1,4 @@
-import {enableForms, setCoordinates} from './form.js'
+import {enableFormsAndFilters, setCoordinates} from './form.js'
 // import { createAdsArray} from './data.js';
 import { createCard } from './card.js';
 import { getDefauldCoordinates } from './data.js';
@@ -12,7 +12,7 @@ const map = L.map('map-canvas');
 const makeInitialization = () => {
 
   map.on('load', () => {
-    enableForms();
+    enableFormsAndFilters();
     setCoordinates(getDefauldCoordinates);
   });
 };
