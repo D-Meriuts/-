@@ -1,4 +1,8 @@
-import {TRANSLATE_TYPE} from './data.js';
+import {TRANSLATE_TYPE, getDefauldCoordinates} from './data.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
+import { sendData } from './api.js';
+import { resetMap, makeInitialization} from './map.js';
+
 
 const adForm = document.querySelector('.ad-form');
 const housingTypeSelect = adForm.querySelector('#type');
@@ -120,6 +124,7 @@ const adFormDisabled = () => {
 
 adFormDisabled();
 
+
 const enableForms = () => {
   mapFilters.classList.remove('map__filters--disabled');
 
@@ -134,13 +139,23 @@ const enableForms = () => {
   }
 };
 
+enableForms(); /*проверить*/
+
+
+// Вспомогательная функция для записи координат по движению главной метки
+
 const setCoordinates = (coordinates) => {
   address.setAttribute('readonly','readonly');
-  address.value = `${  coordinates.lat.toFixed(5)  }, ${  coordinates.lng.toFixed(5)}`;
+  address.value = `${  coordinates().lat.toFixed(5)  }, ${  coordinates().lng.toFixed(5)}`;
 };
 
-const validation = (form) => {
+setCoordinates(getDefauldCoordinates);
 
+makeInitialization(); /*проверить*/
+
+
+
+const validation = (adForm) => {
   const removeError = (input) => {
     const parent = input.parentNode;
 
@@ -149,7 +164,6 @@ const validation = (form) => {
       parent.classList.remove('error-input');
     }
   }
-
   const createError = (input, text) => {
     const parent = input.parentNode;
     const errorLabel = document.createElement('label');
@@ -162,9 +176,9 @@ const validation = (form) => {
   let result = true;
 
 
-  form.querySelectorAll('input').forEach(input => {
-    setTimeout(() => {removeError(input);
-
+  adForm.querySelectorAll('input').forEach(input => {
+    setTimeout(() => {
+      removeError(input);
     }, 5000);
 
 
@@ -191,14 +205,6 @@ const validation = (form) => {
         result = false
       }
     }
-
-    // if (input.dataset.min) {
-    //   if (input.value < TRANSLATE_TYPE[housingTypeSelect.value].minPrice) {
-    //     removeError(input);
-    //     createError(input, 'Значение ниже минимального');
-    //     result = false
-    //   }
-    // }
   });
 
   return result
@@ -218,5 +224,33 @@ const formValidation = () => {
 };
 
 formValidation();
+
+// Функция отправки данных формы на сервер
+
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  sendData(
+    () => {
+      showSuccessMessage();
+      resetMap();
+      adForm.reset();
+      setCoordinates(getDefauldCoordinates);
+    },
+    () => showErrorMessage(),
+    new FormData(evt.target),
+  );
+});
+
+// Обрабочик кнопки cброса данных формы и карты
+
+const resetButton = document.querySelector('.ad-form__reset');
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetMap();
+  adForm.reset();
+  setCoordinates(getDefauldCoordinates);
+});
+
 
 export {mapFiltersDisabled, enableForms, adFormDisabled,  setCoordinates}
