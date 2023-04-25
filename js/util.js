@@ -39,7 +39,6 @@ const shuffleArray = (array) => {
   return array;
 };
 
-<<<<<<< HEAD
 // Новый массив из другого массива
 const getRandomElementsArray = (array) => {
   return shuffleArray(array).slice(0, getRandomNumber(1, array.length));
@@ -75,65 +74,3 @@ const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 
 export {addZeros, getRandomElementArray, getRandomNumber, getRandomElementsArray, getAddress, showAlert, isEscEvent}
-=======
-  // Генерирует адрес
-  getAddress: function ({lat, lng}) {
-    return `${lat.toFixed(5)}, ${lng.toFixed(5)}`
-  },
-}
-
-const isEscEvent = (evt) => {
-  return evt.key === 'Escape' || evt.key === 'Esc';
-};
-
-const closePopup = () => {
-  if (document.querySelector('.success')) {
-    document.querySelector('.success').remove();
-  }
-  if (document.querySelector('.error')) {
-    document.querySelector('.error').remove();
-  }
-  document.removeEventListener('keydown', onPopupEscKeydown);
-  document.removeEventListener('keydown', onPopupClick);
-};
-
-const onPopupEscKeydown = (evt) => {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    closePopup();
-  }
-};
-
-const onPopupClick = () => {
-  closePopup();
-};
-
-const showSuccessMessage = () => {
-  const successTemplate = document.querySelector('#success').content.querySelector('.success');
-  const successMessage = successTemplate.cloneNode(true);
-  successMessage.style.zIndex = 1000;
-  document.querySelector('main').append(successMessage);
-  document.addEventListener('keydown', onPopupEscKeydown);
-  document.addEventListener('click', onPopupClick);
-};
-
-const showErrorMessage = (message) => {
-  const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorMessage = errorTemplate.cloneNode(true);
-  errorMessage.style.zIndex = 1000;
-  if (message) {
-    errorMessage.querySelector('p').textContent = message;
-  }
-  document.querySelector('main').append(errorMessage);
-  document.addEventListener('keydown', onPopupEscKeydown);
-  document.addEventListener('click', closePopup);
-};
-
-export const addZeros = functions.addZeros;
-export const getRandomNumber = functions.getRandomNumber;
-export const getRandomElementArray = functions.getRandomElementArray;
-export const shuffleArray = functions.shuffleArray;
-export const getRandomElementsArray = functions.getRandomElementsArray;
-export const getAddress = functions.getAddress;
-export {showSuccessMessage, showErrorMessage};
->>>>>>> 6b2d38fab44acd6907f2623c32182e099a4f2fd1
