@@ -42,6 +42,7 @@ map.setView({
   lng: getDefauldCoordinates().lng,
 }, 12);
 
+
 const mainPinIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
   iconSize: [52, 52],
@@ -192,3 +193,4 @@ mapFiltersElement.addEventListener('change', debounce(() => {
 }));
 
 export {setAdsToMap, resetMap, makeInitialization};
+
