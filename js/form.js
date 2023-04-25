@@ -1,6 +1,8 @@
-import {TRANSLATE_TYPE, sendData} from './data.js';
-import {showErrorMessage, showSuccessMessage} from './util.js';
-import { resetAddress } from './map.js';
+import {TRANSLATE_TYPE, getDefauldCoordinates} from './data.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
+import { sendData } from './api.js';
+import { resetMap, makeInitialization} from './map.js';
+import { resetImages } from './images.js';
 
 
 const adForm = document.querySelector('.ad-form');
@@ -90,11 +92,13 @@ const resetForm = () => {
 // меняет количество гостей на 1 при загрузке страницы и блокирует остальные
 document.addEventListener('DOMContentLoaded', function() {
   if (roomNumberSelect.value === '1') {
-    capacityOptions[0].setAttribute('selected', 'selected');
-    capacityOptions[1].setAttribute('disabled', 'disabled');
-    capacityOptions[2].setAttribute('disabled', 'disabled');
-    capacityOptions[3].setAttribute('disabled', 'disabled');
+    capacityOptions[2].removeAttribute('selected', '')
+    capacityOptions[0].setAttribute('selected', '')
+    capacityOptions[1].setAttribute('disabled', '');
+    capacityOptions[2].setAttribute('disabled', '');
+    capacityOptions[3].setAttribute('disabled', '');
   }
+
 });
 
 const roomCapacityHandler = () => {
@@ -175,26 +179,19 @@ timeOutSelect.addEventListener('change', () => {
   timeInSelect.value = timeOutSelect.value;
 });
 
-const mapFiltersDisabled = () => {
-  mapFilters.classList.add('map__filters--disabled');
-
-  for (let i = 0; i < mapFilters.children.length; i++) {
-    mapFilters.children[i].setAttribute('disabled', 'disabled');
-  }
-
-};
-
 const adFormDisabled = () => {
   adForm.classList.add('ad-form--disabled');
 
   for (let i = 0; i < adForm.children.length; i++) {
     adForm.children[i].setAttribute('disabled', 'disabled');
   }
-
 };
 
+adFormDisabled();
 
-const adFormAndMapFiltersEnabled = () => {
+
+const enableFormsAndFilters = () => {
+
   mapFilters.classList.remove('map__filters--disabled');
 
   for (let i = 0; i < mapFilters.children.length; i++) {
@@ -206,17 +203,23 @@ const adFormAndMapFiltersEnabled = () => {
   for (let i = 0; i < adForm.children.length; i++) {
     adForm.children[i].removeAttribute('disabled');
   }
-
 };
 
-address.setAttribute('readonly', 'readonly');
+// Вспомогательная функция для записи координат по движению главной метки
 
-const setAddresInputValue = (value) => {
-  address.value = value;
+const setCoordinates = (coordinates) => {
+  address.setAttribute('readonly','readonly');
+  address.value = `${  coordinates().lat.toFixed(5)  }, ${  coordinates().lng.toFixed(5)}`;
 };
 
-const validation = (form) => {
+setCoordinates(getDefauldCoordinates);
 
+makeInitialization(enableFormsAndFilters());
+
+
+
+
+const validation = (adForm) => {
   const removeError = (input) => {
     const parent = input.parentNode;
 
@@ -225,7 +228,6 @@ const validation = (form) => {
       parent.classList.remove('error-input');
     }
   }
-
   const createError = (input, text) => {
     const parent = input.parentNode;
     const errorLabel = document.createElement('label');
@@ -237,7 +239,11 @@ const validation = (form) => {
 
   let result = true;
 
-  form.querySelectorAll('input').forEach(input => {
+  adForm.querySelectorAll('input').forEach(input => {
+    setTimeout(() => {
+      removeError(input);
+    }, 3000);
+
 
     setTimeout(() => {removeError(input);
 
@@ -267,53 +273,56 @@ const validation = (form) => {
       }
     }
   });
-
   return result
 }
 
-
-
 const formValidation = () => {
-  adForm.addEventListener('input', function(evt){
-    if (validation(this) == false) {
-      evt.preventDefault()
-    }
-  });
+
   adForm.addEventListener('submit', function(evt){
     if (validation(this) == false) {
       evt.preventDefault()
     }
+
   });
 
+  adForm.addEventListener('keyup', function(evt){
+    if (validation(this) == false) {
+      evt.preventDefault()
+    }
+  });
 };
 
 formValidation();
 
-const onSubmitAdForm = (onSuccess, onFail) => {
-  adForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    sendData(
-      () => onSuccess(),
-      () => onFail(),
-      new FormData(evt.target),
-    );
-  });
-};
+// Функция отправки данных формы на сервер
 
-const resetAdForm = () => {
-  resetForm();
-  resetAddress();
-};
-resetAdForm();
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
+  sendData(
+    () => {
+      showSuccessMessage();
+      resetMap();
+      adForm.reset();
+      resetImages();
+      setCoordinates(getDefauldCoordinates);
+    },
+    () => showErrorMessage(),
+    new FormData(evt.target),
+  );
+});
 
+// Обрабочик кнопки cброса данных формы и карты
+
+const resetButton = document.querySelector('.ad-form__reset');
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  resetAdForm();
-  resetAddress();
+  resetMap();
+  adForm.reset();
+  resetImages();
+  setCoordinates(getDefauldCoordinates);
+});
 
-
-})
 
 onSubmitAdForm(() => {
   showSuccessMessage();
@@ -323,4 +332,5 @@ onSubmitAdForm(() => {
 mapFiltersDisabled();
 adFormDisabled();
 
-export {mapFiltersDisabled, adFormDisabled, adFormAndMapFiltersEnabled, setAddresInputValue}
+export {enableFormsAndFilters, adFormDisabled,  setCoordinates};
+

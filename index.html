@@ -20,7 +20,7 @@
     <section class="map">
 
       <!-- Блок для вставки карты -->
-      <div class="map__canvas" id="map-canvas">
+      <div class="map__canvas" id="map-canvas" style="height: 500px;">
 
       </div>
 
@@ -69,8 +69,6 @@
         </form>
       </div>
     </section>
-
-    <!-- Форма объявления -->
     <section class="notice">
       <h2 class="notice__title">Ваше объявление</h2>
       <form class="ad-form" method="post" action="https://23.javascript.pages.academy/keksobooking" enctype="multipart/form-data" autocomplete="off">
@@ -89,7 +87,6 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="title">Заголовок объявления</label>
-          <!-- заголовок -->
           <input id="title" name="title" type="text" placeholder="Милая, уютная квартирка в центре Токио"  data-required="true" data-min-length="30" data-max-length="100" >
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
@@ -108,8 +105,7 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <!-- стоимость -->
-          <input id="price" name="price" type="number" step="500" placeholder="5000" min="0" max="1000000" data-min="0" data-max="1000000" data-required="true">
+          <input id="price" name="price" type="number" placeholder="5000" step="500" min="0" max="1000000" data-min="0" data-max="1000000" data-required="true">
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>

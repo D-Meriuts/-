@@ -1,14 +1,11 @@
 const OFFER_PHOTO = { width: 45, height: 40 };
 
-const GET_DATA_URL = 'https://23.javascript.pages.academy/keksobooking/data';
-
-const SEND_DATA_URL = 'https://23.javascript.pages.academy/keksobooking';
-
-
-const OFFERS_COUNT = 10;
-
 const TRANSLATE_TYPE = { flat: { ru: 'Квартира', minPrice: 1000 }, bungalow: { ru: 'Бунгало', minPrice: 0 }, hotel: {ru: 'Отель', minPrice: 3000 }, house: { ru: 'Дом', minPrice: 5000 }, palace: { ru: 'Дворец', minPrice: 10000 } };
 
+const getDefauldCoordinates = () => ({
+  lat: 35.67519,
+  lng: 139.73104,
+});
 const createOfferPhotos = (photos) => {
   const photosListFragment = document.createDocumentFragment();
   photos.forEach((photo) => {
@@ -34,70 +31,5 @@ const createOfferFeatures = (features) => {
   return featuresItemsFragment;
 }
 
-// const getData = (onSuccess, onFail) => {
-//   fetch(GET_DATA_URL)
-//     .then((response) => {
-//       if (response.ok) {
-//         return response.json();
-//       }
-//       throw new Error('Ошибка загрузки данных с сервера');
-//     })
-//     .then((cards) => onSuccess(cards))
-//     .catch((er) => {
-//       er.message = 'Ошибка загрузки данных с сервера';
-//       onFail(er);
-//     });
-// };
-
-// const sendData = (onSuccess, onFail, body) => {
-//   fetch(SEND_DATA_URL,
-//     {
-//       method: 'POST',
-//       body: body,
-//     }
-//   )
-//     .then((response) => response.ok ? onSuccess() : onFail())
-//     .catch(() => {
-//       onFail();
-//     });
-// };
-
-// Функция получения данных с сервера
-
-const getData = (onSuccess) => {
-  fetch(GET_DATA_URL)
-    .then((response) => response.json())
-    .then((adsList) => {
-      onSuccess(adsList);
-    })
-    .catch(() => {
-      showAlert('Не удалось получить данные с сервера.');
-    });
-};
-
-// Функция отправки данных на сервер
-
-const sendData = (onSuccess, onFail, body) => {
-  fetch(
-    SEND_DATA_URL,
-    {
-      method: 'POST',
-      body,
-    },
-  )
-    .then((response) => {
-      if (response.ok) {
-        onSuccess();
-      }
-      else {
-        onFail();
-      }
-    })
-    .catch(() => {
-      onFail();
-    });
-};
-
-export {TRANSLATE_TYPE, OFFERS_COUNT, createOfferPhotos, createOfferFeatures, getData, sendData};
-
+export {TRANSLATE_TYPE, getDefauldCoordinates, createOfferPhotos, createOfferFeatures};
 
