@@ -4,7 +4,6 @@ import { sendData } from './api.js';
 import { resetMap, makeInitialization} from './map.js';
 import { resetImages } from './images.js';
 
-
 const adForm = document.querySelector('.ad-form');
 const housingTypeSelect = adForm.querySelector('#type');
 const priceInput = adForm.querySelector('#price');
@@ -15,79 +14,6 @@ const address = adForm.querySelector('#address');
 const roomNumberSelect = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const capacityOptions = capacity.querySelectorAll('option');
-const resetButton = adForm.querySelector('.ad-form__reset');
-
-const avatar = adForm.querySelector('.ad-form-header__preview img');
-const titleInput = adForm.querySelector('#title');
-const description = adForm.querySelector('#description');
-const features = adForm.querySelectorAll('.features__checkbox');
-const photos = adForm.querySelectorAll('.ad-form__photo');
-
-
-
-/**
- * Начальные значения элементов формы - сразу после загрузки страницы, до ввода пользователем
- */
-const defaultFormSetting = {
-  avatarKey: avatar.src,
-  // Значение title = пустая строка (как изначально)
-  titleKey: titleInput.value,
-  // Значение типа жилья = пустая строка (как изначально)
-  typeKey: housingTypeSelect.value,
-  // Значение цены = пустая строка (как изначально)
-  priceKey: priceInput.value,
-  // Значение цены по умолчанию в плейсхолдере = значение плейсхолдера (как изначально)
-  pricePlaceholder: priceInput.placeholder,
-  // Значение времени заезда = значение value (как изначально)
-  timeInKey: timeInSelect.value,
-  // Значение времени выезда = значение value (как изначально)
-  timeOutKey: timeOutSelect.value,
-  // Значение количества комнат = значение value (как изначально)
-  roomNumberKey: roomNumberSelect.value,
-  // Значение количества жильцов = значение value (как изначально)
-  capacityKey: capacity.value,
-  // Значение поля ОПИСАНИЕ = значение value (как изначально)
-  descriptionKey: description.value,
-};
-
-/**
- * Функция сброса введённых данных до дефолтных при нажатии кнопки ОЧИСТИТЬ или при удачной отправке формы
- */
-const resetForm = () => {
-  // Сбрасываем путь у картинки на дефолтный
-  avatar.src = defaultFormSetting.avatarKey;
-  // Сбрасываем значение у заголовка на дефолтный (пустая строка)
-  titleInput.value = defaultFormSetting.titleKey;
-  // Сбрасываем значение у типа жилья на дефолтный (Квартира)
-  housingTypeSelect.value = defaultFormSetting.typeKey;
-  // Сбрасываем значение у цены на дефолтный (пустая строка)
-  priceInput.value = defaultFormSetting.priceKey;
-  // Сбрасываем плейсхолдер у цены на дефолтный (5000)
-  priceInput.placeholder = defaultFormSetting.pricePlaceholder;
-  // Сбрасываем время заезда на дефолтное (12:00)
-  timeInSelect.value = defaultFormSetting.timeInKey;
-  // Сбрасываем время выезда на дефолтное (12:00)
-  timeOutSelect.value = defaultFormSetting.timeOutKey;
-  // Сбрасываем количество комнат на дефолтное (1)
-  roomNumberSelect.value = defaultFormSetting.roomNumberKey;
-  // Сбрасываем количество жильцов (вместимость) на дефолтное (1 гость)
-  capacity.value = defaultFormSetting.capacityKey;
-  // Сбрасываем описание на дефолтное (пустая строка)
-  description.value = defaultFormSetting.descriptionKey;
-
-  // Убираем checked у чекбоксов
-  features.forEach((item) => {
-    item.checked = false;
-  });
-
-  // Очищаем загруженные фотки объявления
-  photos.innerHTML = '';
-
-};
-
-
-
-
 
 // меняет количество гостей на 1 при загрузке страницы и блокирует остальные
 document.addEventListener('DOMContentLoaded', function() {
@@ -191,7 +117,6 @@ adFormDisabled();
 
 
 const enableFormsAndFilters = () => {
-
   mapFilters.classList.remove('map__filters--disabled');
 
   for (let i = 0; i < mapFilters.children.length; i++) {
@@ -215,7 +140,6 @@ const setCoordinates = (coordinates) => {
 setCoordinates(getDefauldCoordinates);
 
 makeInitialization(enableFormsAndFilters());
-
 
 
 
@@ -244,10 +168,6 @@ const validation = (adForm) => {
       removeError(input);
     }, 3000);
 
-
-    setTimeout(() => {removeError(input);
-
-    }, 5000);
 
     if (input.dataset.minLength) {
       if (input.value.length < input.dataset.minLength) {
@@ -282,7 +202,6 @@ const formValidation = () => {
     if (validation(this) == false) {
       evt.preventDefault()
     }
-
   });
 
   adForm.addEventListener('keyup', function(evt){
@@ -324,13 +243,4 @@ resetButton.addEventListener('click', (evt) => {
 });
 
 
-onSubmitAdForm(() => {
-  showSuccessMessage();
-  resetAdForm();
-}, showErrorMessage);
-
-mapFiltersDisabled();
-adFormDisabled();
-
 export {enableFormsAndFilters, adFormDisabled,  setCoordinates};
-
