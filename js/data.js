@@ -6,8 +6,6 @@ const getDefauldCoordinates = () => ({
   lat: 35.67519,
   lng: 139.73104,
 });
-
-
 const createOfferPhotos = (photos) => {
   const photosListFragment = document.createDocumentFragment();
   photos.forEach((photo) => {
@@ -34,3 +32,4 @@ const createOfferFeatures = (features) => {
 }
 
 export {TRANSLATE_TYPE, getDefauldCoordinates, createOfferPhotos, createOfferFeatures};
+
