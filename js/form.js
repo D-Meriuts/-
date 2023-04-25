@@ -2,7 +2,7 @@ import {TRANSLATE_TYPE, getDefauldCoordinates} from './data.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 import { sendData } from './api.js';
 import { resetMap, makeInitialization} from './map.js';
-
+import { resetImages } from './images.js';
 
 const adForm = document.querySelector('.ad-form');
 const housingTypeSelect = adForm.querySelector('#type');
@@ -18,11 +18,13 @@ const capacityOptions = capacity.querySelectorAll('option');
 // меняет количество гостей на 1 при загрузке страницы и блокирует остальные
 document.addEventListener('DOMContentLoaded', function() {
   if (roomNumberSelect.value === '1') {
-    capacityOptions[0].setAttribute('selected', 'selected');
-    capacityOptions[1].setAttribute('disabled', 'disabled');
-    capacityOptions[2].setAttribute('disabled', 'disabled');
-    capacityOptions[3].setAttribute('disabled', 'disabled');
+    capacityOptions[2].removeAttribute('selected', '')
+    capacityOptions[0].setAttribute('selected', '')
+    capacityOptions[1].setAttribute('disabled', '');
+    capacityOptions[2].setAttribute('disabled', '');
+    capacityOptions[3].setAttribute('disabled', '');
   }
+
 });
 
 const roomCapacityHandler = () => {
@@ -103,17 +105,6 @@ timeOutSelect.addEventListener('change', () => {
   timeInSelect.value = timeOutSelect.value;
 });
 
-const mapFiltersDisabled = () => {
-  mapFilters.classList.add('map__filters--disabled');
-
-  for (let i = 0; i < mapFilters.children.length; i++) {
-    mapFilters.children[i].setAttribute('disabled', 'disabled');
-  }
-
-};
-
-mapFiltersDisabled();
-
 const adFormDisabled = () => {
   adForm.classList.add('ad-form--disabled');
 
@@ -139,9 +130,6 @@ const enableFormsAndFilters = () => {
   }
 };
 
-// enableFormsAndFilters(); /*проверить*/
-
-
 // Вспомогательная функция для записи координат по движению главной метки
 
 const setCoordinates = (coordinates) => {
@@ -151,7 +139,7 @@ const setCoordinates = (coordinates) => {
 
 setCoordinates(getDefauldCoordinates);
 
-makeInitialization(enableFormsAndFilters()); /*проверить*/
+makeInitialization(enableFormsAndFilters());
 
 
 
@@ -175,11 +163,10 @@ const validation = (adForm) => {
 
   let result = true;
 
-
   adForm.querySelectorAll('input').forEach(input => {
     setTimeout(() => {
       removeError(input);
-    }, 5000);
+    }, 3000);
 
 
     if (input.dataset.minLength) {
@@ -206,17 +193,18 @@ const validation = (adForm) => {
       }
     }
   });
-
   return result
 }
 
 const formValidation = () => {
-  adForm.addEventListener('input', function(evt){
+
+  adForm.addEventListener('submit', function(evt){
     if (validation(this) == false) {
       evt.preventDefault()
     }
   });
-  adForm.addEventListener('submit', function(evt){
+
+  adForm.addEventListener('keyup', function(evt){
     if (validation(this) == false) {
       evt.preventDefault()
     }
@@ -235,6 +223,7 @@ adForm.addEventListener('submit', (evt) => {
       showSuccessMessage();
       resetMap();
       adForm.reset();
+      resetImages();
       setCoordinates(getDefauldCoordinates);
     },
     () => showErrorMessage(),
@@ -249,8 +238,9 @@ resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetMap();
   adForm.reset();
+  resetImages();
   setCoordinates(getDefauldCoordinates);
 });
 
 
-export {mapFiltersDisabled, enableFormsAndFilters, adFormDisabled,  setCoordinates}
+export {enableFormsAndFilters, adFormDisabled,  setCoordinates};
